@@ -1,44 +1,17 @@
-# Name of the workflow, displayed in the GitHub Actions UI
 name: Node.js CI
 
-# Specifies when the workflow should be triggered
 on:
-  # Triggers the workflow on 'push' events to the 'main' branch
   push:
-    branches: [ main ]  # Limits the trigger to the 'main' branch only
-  # Also triggers the workflow on 'pull_request' events targeting the 'main' branch
-  pull_request:
-    branches: [ main ]  # Limits the trigger to pull requests targeting 'main'
+    branches: [ main ]
 
-# Defines the jobs that the workflow will execute
 jobs:
-  # Job identifier, can be any name (here it's 'build')
   build:
-    # Specifies the type of virtual host environment (runner) to use
-    runs-on: ubuntu-latest  # Uses the latest Ubuntu runner provided by GitHub
+    runs-on: ubuntu-latest
 
-    # Strategy for running the jobs - useful for testing across multiple environments
-    strategy:
-      # A matrix build strategy to test against multiple versions of Node.js
-      matrix:
-        node-version: [14.x, 16.x]  # Tests the application with Node.js versions 14.x and 16.x
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - # Checks-out your repository under $GITHUB_WORKSPACE, so the job can access it
-      uses: actions/checkout@v2  # Clones the repository to the runner
-
-    - # Sets up the specified version of Node.js
-      name: Use Node.js ${{ matrix.node-version }}  # Names the step with the Node.js version being used
-      uses: actions/setup-node@v1  # Sets up the Node.js environment
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}  # Specifies the Node.js version from the matrix
-
-    - # Installs node modules as specified in the project's package-lock.json
-      run: npm ci  # Installs dependencies exactly as defined in package-lock.json
-
-    - # This command will only run if a build script is defined in the package.json
-      run: npm run build --if-present  # Runs the build script if it exists, skips otherwise
-
-    - # Runs tests as defined in the project's package.json
-      run: npm test  # Executes the test script defined in package.json
+        node-version: '14.x'
+    - run: npm ci
+    - run: npm test
