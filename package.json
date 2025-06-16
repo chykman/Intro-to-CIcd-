@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/chykman/Intro-to-CIcd-/issues"
   },
-  "homepage": "https://github.com/chykman/Intro-to-CIcd-#readme"
+  "homepage": "https://github.com/chykman/Intro-to-CIcd-#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
 }
